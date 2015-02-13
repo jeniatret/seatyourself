@@ -1,12 +1,9 @@
 class ReservationsController < ApplicationController
 	before_filter :load_restaurant, :load_user
+	before_filter :ensure_logged_in, only: [:create, :destroy]
 
 	def index 
 		@reservations = @model.reservations
-	end
-	
-	def new
-		@reservation = Reservation.new
 	end
 	
 	def create
@@ -17,7 +14,8 @@ class ReservationsController < ApplicationController
 		if @reservation.save
 			redirect_to user_reservation_path(current_user, @reservation)
 		else 
-			render :new
+			@restaurant = @model
+			render 'restaurants/show'
 		end 
 	end	
 

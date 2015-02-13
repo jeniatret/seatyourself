@@ -1,7 +1,7 @@
 <h1> Create new reservation</h1>
 
 <%= form_for [owner, reservation] do |f| %>
-
+<%= render partial: 'reservations/errornotice' %>
   <div class="field">
     <%= f.label :time %><br />
     <%= f.number_field :time %>
