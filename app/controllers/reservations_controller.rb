@@ -1,8 +1,8 @@
 class ReservationsController < ApplicationController
-	before_filter :load_restaurant
+	before_filter :load_restaurant, :load_user
 
 	def index 
-		@reservations = Reservation.all
+		@reservations = @model.reservations
 	end
 	
 	def new
@@ -11,9 +11,11 @@ class ReservationsController < ApplicationController
 	
 	def create
 		 @reservation = Reservation.new(reservation_params)
+		 @reservation.restaurant = @model
+		 @reservation.user = User.first
 		
 		if @reservation.save
-		    redirect_to reservations_url
+			redirect_to user_reservation_path(User.first, @reservation)
 		else 
 			render :new
 		end 
@@ -48,9 +50,22 @@ class ReservationsController < ApplicationController
 		params.require(:reservation).permit(:time, :date, :party_size)
 	end
 
-	def load_restaurant
-		@restaurant = Restaurant.find(params[:restaurant_id]) 
+	# Skip loading model if <association>_id is missing
+	# from params
 
+	# Restaurant and User both share an association:
+	# - reservations
+	# so we can leverage that in our views by using
+	# a generic model name.
+	# model name could probably be improved
+	# comments in source code are terrible
+	def load_restaurant
+		return unless params[:restaurant_id]
+		@model = Restaurant.find(params[:restaurant_id]) 
 	end
 
+	def load_user
+		return unless params[:user_id]
+		@model = User.find(params[:user_id])
+	end
 end

@@ -1,1 +1,5 @@
-index.html.erb
+<% @reservations.each do |reservation| %>
+<p> <%=link_to reservation.date, "reservations/#{reservation.id}" %> <%= reservation.time %> <%= reservation.party_size %></p>
+<% end %>
+
+
