@@ -18,8 +18,15 @@ class RestaurantsController < ApplicationController
 	end	
 
 	def show
-		@restaurant = Restaurant.find(params[:id])
-		@reservation = Reservation.new
+		if params[:restaurant_id]
+			# nested (/restaruants/:restaurant_id/reservations/:id)
+			@restaurant = Restaurant.find(params[:restaurant_id])
+			@reservation = @restaurant.reservations.find(params[:id])
+		else
+			# just /restaurant/:id
+			@restaurant = Restaurant.find(params[:id])
+			@reservation = @restaurant.reservations.new
+		end
 	end
 	
 	def edit 
