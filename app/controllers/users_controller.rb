@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-	#def index 
+	def index 
 	#	@reservations = current_user.reservations
-	#end
+	end
 	
 	def new
 		@user = User.new
