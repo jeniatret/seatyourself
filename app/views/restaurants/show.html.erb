@@ -1,15 +1,57 @@
-<h1> Show Restaurant </h1>
+<h1>Booking for the restaurant: <%= @restaurant.name %></h1>
 
 <ul>
-	<p> <li><%= @restaurant.name %></li> 
-		<li><%= @restaurant.address %></li> 
-		<li><%= @restaurant.phone %></li> 
-		<li><%= @restaurant.summary %></li> 
-		<li><%= @restaurant.capacity %></li>
+	<p>	<li>Address: <%= @restaurant.address %></li> 
+		<li>Phone: <%= @restaurant.phone %></li> 
+		<li>Summary: <%= @restaurant.summary %></li> 
 	</p>
 </ul>
 
 <%= link_to "Back to Restaurants", restaurants_url %> 
 
 <%= render partial: 'restaurants/new_reservation_form', locals: {owner: @restaurant, reservation: @reservation} %>
+
+
+  <h3>Reviews for <%= @restaurant.name %></h3>
+
+  <% @restaurant.reviews.each do |review| %>
+    <p>
+      <%= review.comment %>
+      <br>
+      <% if review.user != nil %>
+        <em> by <%= review.user.first_name %></em>
+        Added on: <%= review.created_at %>
+      <% end %>
+    </p>
+  <% end %>
+
+  <% if current_user %>
+  <h4>New Review</h4>
+
+  <%= form_for([@restaurant, @review]) do |f| %>
+    <% if @review.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+        <ul>
+        <% @review.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :comment %><br />
+      <%= f.text_area :comment %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+
+<% else %>
+  <p>Please <%= link_to "log in", new_session_path %> to add a review or to make a reservation.</p> 
+<% end %>
+
 
