@@ -22,13 +22,12 @@ class RestaurantsController < ApplicationController
 			# nested (/restaruants/:restaurant_id/reservations/:id)
 			@restaurant = Restaurant.find(params[:restaurant_id])
 			@reservation = @restaurant.reservations.find(params[:id])
-			@review = @restaurant.reviews.find(params[:id])
 		else
 			# just /restaurant/:id
 			@restaurant = Restaurant.find(params[:id])
-			@reservation = @restaurant.reservations.new
-			@review = @restaurant.reviews.new
+			@reservation = Reservation.new
 		end
+		@review = Review.new
 	end
 	
 	def edit 

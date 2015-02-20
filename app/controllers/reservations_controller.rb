@@ -15,6 +15,7 @@ class ReservationsController < ApplicationController
 			redirect_to user_reservation_path(current_user, @reservation)
 		else 
 			@restaurant = @model
+			@review = Review.new
 			render 'restaurants/show'
 		end 
 	end	
