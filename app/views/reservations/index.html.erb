@@ -1,6 +1,9 @@
+<h3> All the reservations for <%= current_user.first_name %></h3>
+
 <% @reservations.each do |reservation| %>
-<p> <%=link_to reservation.date, "reservations/#{reservation.id}" %> <%= reservation.time %> <%= reservation.party_size %></p>
+	<%= render reservation %>
 <% end %>
+
 
 
 

@@ -1,9 +1,6 @@
 <h1> List of Restaurants </h1>
 <h2> Please, choose a restaurant you want to book: </h2>
 
-
-<% @restaurants.each do |restaurant| %>
-<p> <%=link_to restaurant.name, "restaurants/#{restaurant.id}" %> | <%= restaurant.summary %> | <%= restaurant.address %> | <%= restaurant.phone %> </p>
-<% end %>
+<%= render @restaurants %>
 
 

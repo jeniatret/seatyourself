@@ -1,21 +1,9 @@
 <h1> Your Table has been reserved!</h1>
 
-<ul>
-	<p> 
-		<li>Restaurant: <%= @reservation.restaurant.name %></li>
-		<li>Time: <%= @reservation.time %></li> 
-		<li>Date: <%= @reservation.date %></li> 
-		<li>Party size: <%= @reservation.party_size %></li>
-		<li>Address: <%= @reservation.restaurant.address %></li>
-		</p>
-</ul>
+<%= render @reservation %>
 
-<%= link_to "Edit", edit_restaurant_reservation_path(@reservation.restaurant, @reservation) %> 
-	| 
-<%= link_to "Delete", restaurant_reservation_path(@reservation.restaurant, @reservation), method: :delete, data: { confirm: "Are you sure you want to delete this reservation?" } %> 
-| 
 <%= link_to "Back to reserve more...", restaurants_url %>
-
 
 <h2> Your other reservations for this month: </h2>
 
+<%= render current_user.reservations - [@reservation] %>

@@ -1,0 +1,10 @@
+<div style="background-color: #fee; display: table;">
+	<%= render reservation.restaurant %>
+	<h3>Reserved on <%= reservation.date %> at <%= reservation.time %>00 hours 
+	for <%= reservation.party_size %> people.
+</div>
+
+<%= link_to "Edit", [current_user, reservation], method: :patch %> 
+	| 
+<%= link_to "Delete", [current_user, reservation], method: :delete %>
+
